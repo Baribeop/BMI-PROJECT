@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beup BMI Calculator</title>
+
+    <style>
+
+    *{
+        background-color: antiquewhite;
+    }        
+        h1{
+        text-align: left;
+        }
+        
+        p {
+            padding: 1px; 
+            display: block;
+            margin-top: px; 
+            color: rgb(57, 27, 139);
+            
+        }
+    </style>   
+
+</head>
+
+
+<body>
+
+<h1> Body Mass Index Calculator</h1> 
+<fieldset>
+    
+    <legend> Enter your data</legend>
+    
+    <form action="/" method="post" style="margin: 5px; color: gray; border-top: 5px;">
+
+        <input type="text" placeholder="Enter your height" size="30" name ="height" required/><br><br>
+
+        <input type="text" placeholder="Enter unit of height (m or cm or inches) " size="30" name="unit of height" required/><br><br>
+
+        <input type="text" placeholder="Enter your weight" size="30" name="weight" required/><br><br>
+
+        <input type="text" placeholder="Enter unit of weight (kg or g or lb) " size="30" name="unit of weight" required/><br><br>
+
+        <button type="submit" > Calculate BMI</button>
+    </form>
+        
+   <p >
+    <!-- {{weight_and_unit}} <br><br>
+    {{height_and_unit}} <br><br> -->
+    {{bmi_status}} 
+
+   </p>
+
+</fieldset>
+
+<body>
+    
+<html>
+  
