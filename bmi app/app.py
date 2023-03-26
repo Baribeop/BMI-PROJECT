@@ -18,8 +18,12 @@ def data_bmi(weight, unit_of_weight, height, unit_of_height):
 
     elif unit_of_weight == "lb": 
      weight_in_kg  = round((weight*0.453),3)
-   
-    
+
+    # else:
+    #     raise ValueError("enter a valid unit of weight")
+
+
+
     if unit_of_height =='m': 
      height_in_m = height
 
@@ -28,10 +32,7 @@ def data_bmi(weight, unit_of_weight, height, unit_of_height):
 
     elif unit_of_height == 'inches':
      height_in_m = round((height*0.0254),3)
-    
-    # else:
 
-    #  error_message = "enter valid height"
     
     bmi_val = round((weight_in_kg)/(height_in_m)**2 ,2)
     
@@ -52,16 +53,45 @@ def val_bmi(bmi_val):
     return bmi_status
 
 
-@app.route('/', methods = ['POST'])    
+
+@app.route('/', methods=['POST', 'GET'])
 def bmi_cal():
-    weight = float(request.form['weight'])
-    unit_of_weight = str(request.form['unit of weight'].lower())
-    height = float(request.form['height'])
-    unit_of_height = str(request.form['unit of height'].lower())
-    bmi_cond = data_bmi(weight, unit_of_weight, height, unit_of_height)
-    bmi_cal = val_bmi(bmi_cond)
-    return render_template('index.html', weight_and_unit = f'{weight}{unit_of_weight}',
-                           height_and_unit=f'{height}{unit_of_height}', bmi_status = bmi_cal)
+    weight = request.form.get('weight')
+    unit_of_weight = request.form.get('unit of weight')
+    height = request.form.get('height')
+    unit_of_height = request.form.get('unit of height')
+    if float(weight) > 0 and float(height) > 0:
+        try:
+
+            weight = float(weight) 
+            height = float(height) 
+           
+        except ValueError:
+            error_message = "Please enter valid weight and height values."
+            return render_template('index.html', error_message=error_message)
+
+        if unit_of_weight not in ['kg', 'g', 'lb'] or unit_of_height not in ['m', 'cm', 'inches']:
+            error_message = "Please enter valid units for weight and height."
+            return render_template('index.html', error_message=error_message)
+
+        bmi_condition = bmi_data(weight, unit_of_weight, height, unit_of_height)
+        
+
+        bmi_test = bmi_result(bmi_condition)
+        return render_template('index.html',
+        weight_and_unit=f'{weight}{unit_of_weight}',
+        height_and_unit=f'{height}{unit_of_height}',
+        bmi_status=bmi_test)
+
+    else:
+        error_message = "Please enter valid height and weight, value must greater than 0."
+        return render_template('index.html', error_message=error_message)
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=9000)
+
 
 
 if __name__ == '__main__':
